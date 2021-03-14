@@ -1,19 +1,18 @@
 export const fetchData = async () => {
-  const URL =
-    "https://gist.githubusercontent.com/josejbocanegra/9a28c356416badb8f9173daf36d1460b/raw/5ea84b9d43ff494fcbf5c5186544a18b42812f09/restaurant.json";
+  // const URL = "https://gist.githubusercontent.com/josejbocanegra/9a28c356416badb8f9173daf36d1460b/raw/5ea84b9d43ff494fcbf5c5186544a18b42812f09/restaurant.json";
   const jsonResponse = await fetch("/restaurant.json");
   const objectResponse = await jsonResponse.json();
   return objectResponse;
 };
 
-var cartItems = [];
+let cartItems = [];
 
 const updateCartSize = () => {
   const productsGrid = document.getElementById("cart-size");
   productsGrid.innerHTML = cartItems.length;
 };
 
-var removeFromCart = (item) => {
+const removeFromCart = (item) => {
   const index = cartItems.indexOf(item);
   if (index !== -1) {
     cartItems.splice(index, 1);
@@ -21,7 +20,7 @@ var removeFromCart = (item) => {
   }
 };
 
-var addToCart = (item) => {
+const addToCart = (item) => {
   cartItems.push(item);
   updateCartSize();
 };
@@ -45,7 +44,7 @@ const getCartSummary = () => {
     let originalItem = cartSummary.find((it) => it.name === key);
     originalItem.quantity = countObject[key];
     originalItem.total = (originalItem.quantity * originalItem.price).toFixed(
-      2
+      2,
     );
     resultArray.push(originalItem);
   }
@@ -138,7 +137,9 @@ const openCart = () => {
     });
 
   document.getElementById("confirm-button").addEventListener("click", () => {
+    // eslint-disable-next-line no-console
     console.log("Resumen del pedido:");
+    // eslint-disable-next-line no-console
     console.log(cartSummary);
   });
 
@@ -207,12 +208,12 @@ export const drawCartItem = () => {
     .addEventListener("click", () => openCart());
 };
 
-export const drawCategoriesNav = (menu, cartItemsCount) => {
+export const drawCategoriesNav = (menu) => {
   const categoriesNav = document.getElementById("categories-nav-ul");
 
   let innerHtml = "";
 
-  menu.forEach((category, i) => {
+  menu.forEach((category) => {
     innerHtml += `
     <li class="nav-item">
       <a class="nav-link" id="nav-${category.name}">
